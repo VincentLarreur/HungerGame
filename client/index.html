@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hunger Game</title>
+    <meta name="author" content="Vincent Larreur & Mohamed Amine Laafoudi">
+    <meta name="description" content="A real-time multiplayer hunger game">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="icon" type="image/png" href="./lollipop-icon.png" />
+    <style type="text/css">
+        @font-face{font-family:"modakregular"; 
+            src:url("./font/modak-regular-webfont.woff2")format("woff2"),
+            url("./font/modak-regular-webfont.woff")format("woff");
+            font-weight:normal;
+            font-style:normal;
+        }
+        html                { height:100%; background-color:steelblue; }
+        body                { font-size:12px; font-family:"Monaco","Consolas","monospace","HelveticaNeue",Helvetica,Arial;background-color:inherit; }
+        #HG_Titre           { font-family:"modakregular";font-size:65px; }
+        td                  { text-align:center; }
+        .container-fluid    { margin-top:30px;max-width:1000px; }
+        #canvas_board       { display:none;min-width:500px;min-height:500PX; }
+        #div_settings       { max-width:400px; margin:auto; }
+        #div_restart        { display:inline-block;margin-top:-3px;display:none;}
+        #div_scores         { display: none; }
+        #div_div_restart    { padding: 10px }
+        #btn_restart        { margin-top:-2px; }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <h3 id="HG_Titre" class="panel-title">Hunger Game</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <canvas id="canvas_board" width="500px" height="500px"></canvas>
+                        <div id="div_settings" class="text-left">
+                            <br>
+                            1. Entrez votre pseudo
+                            <input id="txt_player_name" type="text" class="form-control input-sm" placeholder="Pseudo">
+                            <br>
+                            2. Rejoignez une partie !
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <td><b>Partie</b></td>
+                                        <td><b>Joueurs</b></td>
+                                        <td><b>Taille</b></td>
+                                        <td><b>Bonbons</b></td>
+                                        <td><b>Action</b></td>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_rooms"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Scores -->
+            <div id="div_scores" class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Scores</h3>
+                    </div>
+                    <div id="panel_scores" class="panel-body"></div>
+                </div>
+            </div>
+            <div id="div_restart" class="col-md-4">
+                <div id="div_div_restart" class="panel panel-default">
+                    <p>Vous êtes mort.</p>
+                    <button id="btn_restart" type="button" class="btn btn-primary btn-sm"
+                        onclick="client.restartGame();">Recommencer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js" crossorigin="anonymous"></script>
+<script src="hg_client.js"></script>
+<script>
+    var client = new HGClient();
+</script>
+
+</html>

@@ -1,4 +1,4 @@
-// Hunger game implementation
+// Hunger game - implementation des mécaniques de jeu
 "use strict";
 class HungerGame {
     /**
@@ -47,12 +47,13 @@ class HungerGame {
 
     /**
      * Création et démarrage pour un nouveau joueur
+     * @param {String} pseudo - Pseudo du joueur
      */
-    startJoueur(nomJoueur) {
+    startJoueur(pseudo) {
         // Crée et ajoute le joueur
         var joueur = {
             id: this.prochainJoueurID,
-            nom: nomJoueur,
+            pseudo: pseudo,
             score: 0
         };
         this.joueurs[joueur.id] = joueur;
@@ -74,7 +75,7 @@ class HungerGame {
     /**
      * Gère les key strokes (touches pressés) par les joueurs.
      * @param {Number} joueurID - joueur ID
-     * @param {Number} data
+     * @param {Object} data - data comprenant le Keycode
      */
     keyStroke(joueurID, data) {
         // Vérification data
@@ -138,6 +139,9 @@ class HungerGame {
         
     }
 
+     /**
+     * Remise à zero du joueur
+     */
     _reset(joueur) {
         joueur.score = 0;
         joueur.direction = -1;
@@ -231,13 +235,61 @@ class HungerGame {
                 (y + directionY + this.tailleZone) % this.tailleZone];
     }
 
+    /**
+     * Démarre le timer du jeu
+     */
+    _startGameTimer() {
+        this._stopGameTimer();
+        this.gameTimer = setInterval(this._gameTimerEvent.bind(this), 150); // Vitesse de jeu
+    }
+
+    /**
+     * Arrete le timer de jeu
+     */
+    _stopGameTimer() {
+        if (typeof this.gameTimer !== 'undefined')
+            clearInterval(this.gameTimer);
+    }
+
+    /**
+     * Met à jour et envoi de l'état de la partie
+     */
+    _gameTimerEvent() {
+        this._nextFrame();
+        this._sendGameState();
+    }
+
+    /**
+     * Envoi de l'état de la partie
+     */
+    _sendGameState() {
+        if (typeof this._gameEventListener !== 'undefined') {
+            var payload = {joueurs: this.joueurs, zone: this.zone};
+            this._gameEventListener(this, 'state', payload);
+        }
+    }
+
+    /**
+     * Genere le prochain état de tous les joueurs
+     */
+    _nextFrame() {
+        // Update l'avancée de chaque joueurs
+        for (var joueurID in this.joueurs) {
+            var joueur = this.joueurs[joueurID];
+            this._updateJoueur(joueur);
+        }
+        this._checkEnd();
+    }
+
+    /**
+     * Vérification de l'état de la partie, si il n'y a plus de bonbons : respawn des nouveaux et reset des joueurs
+     */
     _checkEnd() {
         if(this.nbBonbons === 0) {
-            var filtered = this.joueurs.filter(function (e) {return e != null;});
-            filtered.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0));
-
+            // Respawn des bonbons
             for (var i = 0; i < this.nb_bonbons; i++) this._spawnBonbons();
             this.nbBonbons = this.nb_bonbons;
+            // Respawn des joueurs
             for (var joueurID in this.joueurs) {
                 var joueur = this.joueurs[joueurID];
                 this._reset(joueur);
