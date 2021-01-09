@@ -200,7 +200,7 @@ class HungerGame {
         
         // Broadcast event
         if (typeof this._gameEventListener !== 'undefined')
-            this._gameEventListener(this, 'player_delete', joueurID);
+            this._gameEventListener(this, 'joueur_mort', joueurID);
     }
 
     /**
@@ -283,9 +283,18 @@ class HungerGame {
 
     /**
      * Vérification de l'état de la partie, si il n'y a plus de bonbons : respawn des nouveaux et reset des joueurs
+     * Et envoi au client le nom du winner
      */
     _checkEnd() {
         if(this.nbBonbons === 0) {
+            var classement = this.joueurs.filter(function (e) {
+                return e != null;
+            });
+            classement.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0));
+            var gagnant  = classement[0];
+            // Envoi du gagnant aux client
+            if (typeof this._gameEventListener !== 'undefined')
+                this._gameEventListener(this, 'win', [gagnant.id, gagnant.pseudo, gagnant.score]);
             // Respawn des bonbons
             for (var i = 0; i < this.nb_bonbons; i++) this._spawnBonbons();
             this.nbBonbons = this.nb_bonbons;

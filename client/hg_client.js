@@ -14,6 +14,7 @@ function HGClient() {
   this.div_scores      = $('#div_scores');
   this.panel_scores    = $('#panel_scores');
   this.div_restart     = $('#div_restart');
+  this.ul_gagnant     = $('#ul_gagnant');
 
   // Variables 
   this.couleurs = ['#2196F3', '#FF5722', '#607D8B', '#E91E63'];
@@ -99,6 +100,19 @@ HGClient.prototype.initSocket = function() {
   socket.on('state', function(data) {
     this.updateScorePanel(data.joueurs);
     this.renderBoard(data.zone);
+  }.bind(this));
+
+  // Reçois un gagnant
+  socket.on('win', function(data) {
+     // genere un ID temporaire aléatoire
+    var tmpID = Math.random().toString(10).substring(2, 10);
+
+    // Genere le dom élément
+    var text = '<span style="color:' + this.couleurJoueur(data[0]) + ';">' + data[1] + '</span> à gagné avec ' + data[2] + ' points!';
+    this.ul_gagnant.append('<li id="' + tmpID + '"class="list-group-item">' + text + '</li>');
+
+    // Supprime le message àprès 2 secondes
+    setTimeout(function() {$('#' + tmpID).remove();}, 2000);
   }.bind(this));
 };
 

@@ -145,15 +145,23 @@ class SocketAPI {
                 socket = hungergame.room.sockets[joueurID];
                 socket.emit('state', data);
             }
-        } else if (event == 'player_delete') {
+        } else {
             // Suppression d'un joueur
-            joueurID = data;
+            joueurID = (data[0] != undefined) ? data[0] : data;
             room = hungergame.room;
             socket = room.sockets[joueurID];
             if (typeof socket !== 'undefined') {
-                // Notification au client de sa mort
-                socket.emit('mort');
-                socket.started = false;
+                if( event == 'joueur_mort' ) {
+                    // Notification au client de sa mort
+                    socket.emit('mort');
+                    socket.started = false;
+                } else if ( event == 'win' ) {
+                    // Notification à tous les clients du gagnant
+                    for (var k in room.sockets) {
+                        var s = room.sockets[k];
+                        s.emit('win', [joueurID, data[1], data[2]]);
+                    }
+                }
             }
         }
     }
