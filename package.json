@@ -1,0 +1,16 @@
+{
+  "name": "hungergames",
+  "version": "0.0.1",
+  "description": "A multiplayer hunger game.",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.istic.univ-rennes1.fr:17002220/hungergames.git"
+  },
+  "scripts": {
+    "start": "node ."
+  }
+}
