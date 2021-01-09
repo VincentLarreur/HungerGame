@@ -46,7 +46,7 @@ function HGClient() {
 HGClient.prototype.initSocket = function() {
 
   // Variable pour la connexion
-  var server_uri = 'http://localhost:8000';
+  var server_uri = 'http://127.0.0.1:8000';
   var socket_io_path = '/socket.io';
   var socket = io(server_uri, { path: socket_io_path, reconnectionAttempts: 3 });
 
