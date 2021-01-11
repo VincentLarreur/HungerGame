@@ -65,6 +65,25 @@ class HungerGame {
     }
 
     /**
+     * Création et démarrage pour un nouveau monkeybot
+     */
+    startMonkey() {
+        // Crée et ajoute le monkey
+        var monkey = {
+            id: this.prochainJoueurID,
+            pseudo: 'Monkey',
+            score: 0,
+            compteur: 0
+        };
+        this.joueurs[monkey.id] = monkey;
+        this.prochainJoueurID++;
+
+        // Spawn le joueur dans la zone de jeu
+        this._spawnJoueur(monkey);
+        return monkey.id;
+    }
+
+    /**
      * Suppression d'un joueur
      * @param {Number} joueurID - joueur ID
      */
@@ -126,7 +145,7 @@ class HungerGame {
      */
     _spawnJoueur(joueur) {
         // Coordonées aléatoires
-        var x = Math.floor((Math.random() * (this.tailleZone - 10)));
+        var x = Math.floor((Math.random() * (this.tailleZone)));
         var y = Math.floor((Math.random() * this.tailleZone));
 
         if (this.zone[x][y] == 0) {
@@ -136,7 +155,6 @@ class HungerGame {
         } else {
             this._spawnJoueur(joueur);
         }
-        
     }
 
      /**
@@ -154,6 +172,14 @@ class HungerGame {
      * @param {Object} joueur - joueur
      */
     _updateJoueur(joueur) {
+        if(joueur.pseudo == 'Monkey') {
+            if(joueur.compteur == 3) {
+                joueur.direction = Math.floor((Math.random() * 4));
+                joueur.compteur = 0;
+            }
+            joueur.compteur++;
+        }
+
         // Release direction lock
         joueur.directionLock = false;
 

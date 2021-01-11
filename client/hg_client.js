@@ -14,10 +14,17 @@ function HGClient() {
   this.div_scores      = $('#div_scores');
   this.panel_scores    = $('#panel_scores');
   this.div_restart     = $('#div_restart');
-  this.ul_gagnant     = $('#ul_gagnant');
+  this.div_monkey      = $('#div_monkey');
+  this.ul_gagnant      = $('#ul_gagnant');
 
   // Variables 
-  this.couleurs = ['#2196F3', '#FF5722', '#607D8B', '#E91E63'];
+
+  this.couleurs = ['#c5a4e7', '#ce25be', '#4d164d', '#800080', '#4b0082', '#20208b', '#0000ff',
+                  '#90c8ea', '#3486b8', '#359c9a', '#1d6d6c', '#8bb684', '#486540', '#0f5a0f',
+                  '#008000', '#a18f24', '#eac424', '#f0b84d', '#f08058', '#ea8824', '#ffc0cb',
+                  '#ff3961', '#e14560', '#800000', '#ff0000', '#808080', '#585454', '#000000',
+                  '#edc0cb', '#e69bad', '#baba9e', '#e2cbba', '#a12725', '#133337', '#420420',
+                  '#e6ba47', '#ffefdb', '#f0f8ff', '#ffa54f', '#cae1ff', '#a96674', '#ccd9ea'];
   this.keyMap = {37: 0, 38: 1, 39: 2, 40: 3, 81: 0, 90: 1, 68: 2, 83: 3};
   this.started = false;
 
@@ -84,6 +91,7 @@ HGClient.prototype.initSocket = function() {
     this.div_settings.hide();
     this.div_restart.hide();
     this.div_scores.show();
+    this.div_monkey.show();
     this.canvas_board.show();
 
     // Enregistrer l'état de jeu
@@ -104,15 +112,17 @@ HGClient.prototype.initSocket = function() {
 
   // Reçois un gagnant
   socket.on('win', function(data) {
-     // genere un ID temporaire aléatoire
-    var tmpID = Math.random().toString(10).substring(2, 10);
-
     // Genere le dom élément
-    var text = '<span style="color:' + this.couleurJoueur(data[0]) + ';">' + data[1] + '</span> à gagné avec ' + data[2] + ' points!';
-    this.ul_gagnant.append('<li id="' + tmpID + '"class="list-group-item">' + text + '</li>');
+    var text = '<span style="color:' 
+      + this.couleurJoueur(data[0])
+      + ';">' + data[1] 
+      + '</span> a gagné avec ' 
+      + data[2] 
+      + ' points!';
+    this.ul_gagnant.append('<li id="li_winner"class="list-group-item">' + text + '</li>');
 
-    // Supprime le message àprès 2 secondes
-    setTimeout(function() {$('#' + tmpID).remove();}, 2000);
+    // Supprime le message après 2 secondes
+    setTimeout(function() {$('#li_winner').remove();}, 2000);
   }.bind(this));
 };
 
@@ -139,6 +149,13 @@ HGClient.prototype.startGame = function(roomID) {
  */
 HGClient.prototype.restartGame = function() {
   this.startGame(this.roomID);
+};
+
+/**
+ * Lancer un monkey
+ */
+HGClient.prototype.startMonkey = function(number) {
+  this.socket.emit('monkey', number);
 };
 
 /**

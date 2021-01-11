@@ -93,6 +93,17 @@ class SocketAPI {
             socket.emit('debut', joueurID);
         }.bind(this));
 
+        socket.on('monkey', function (data) {
+            // Recherche de la room
+            var roomID = socket.roomID;
+            var room = this.rooms[roomID];
+            if (typeof room === 'undefined') return;
+            
+            for(var i=0; i<data; i++) {
+                room.hungergame.startMonkey();
+            }
+        }.bind(this));
+
         // keystroke - Lorsqu'un joueur appuie un input connu du systeme
         socket.on('keystroke', function (data) {
             // Deuxième vérification, de l'état du socket et du keystroke

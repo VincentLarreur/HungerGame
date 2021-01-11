@@ -9,7 +9,7 @@ socket_api = new SocketAPI();
 socket_api.startService(
     config.config.port,
     config.config.nbRooms, 
-    config.config.taille, 
+    config.config.taille,
     config.config.nbBonbons);
 
 console.log('-- Server started on port ', config.config.port);

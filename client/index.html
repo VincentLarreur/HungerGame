@@ -24,8 +24,10 @@
         #div_settings       { max-width:400px; margin:auto; }
         #div_restart        { display:inline-block;margin-top:-3px;display:none;}
         #div_scores         { display: none; }
+        #div_monkey         { display: none; }
         #div_div_restart    { padding: 10px }
         #btn_restart        { margin-top:-2px; }
+        #btn_monkey         { margin: 3px; }
     </style>
 </head>
 
@@ -62,6 +64,21 @@
                 </div>
             </div>
             <!-- Scores -->
+            <div id="div_monkey" class="col-md-4">
+                <div id="div_div_monkey" class="panel panel-default text-center">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Monkey Bot</h3>
+                    </div>
+                    <p>Les Monkey sont des bots qui bougent aléatoirement</p>
+                    <button id="btn_monkey" type="button" class="btn btn-warning btn-sm"
+                        onclick="client.startMonkey(1);">Ajouter 1 Monkey</button>
+                    <button id="btn_monkey" type="button" class="btn btn-warning btn-sm"
+                        onclick="client.startMonkey(10);">Ajouter 10 Monkey</button>
+                    <button id="btn_monkey" type="button" class="btn btn-warning btn-sm"
+                        onclick="client.startMonkey(100);">Ajouter 100 Monkey</button>
+                </div>
+            </div>
+            <!-- Scores -->
             <div id="div_scores" class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -84,7 +101,7 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js" crossorigin="anonymous"></script>
-<script src="hg_client.js"></script>
+<script type="text/javascript" src="hg_client.js"></script>
 <script>
     var client = new HGClient();
 </script>
