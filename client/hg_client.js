@@ -171,6 +171,10 @@ HGClient.prototype.couleurJoueur = function(joueurID) {
  * @param {Number[][]} zone - zone de jeu
  */
 HGClient.prototype.renderBoard = function(zone) {
+  if((zone.length * zone.length) <= 100) {  // Quickfix pour regler le problème de crash lors de 100 monkey sur une zone
+    let btn_monkey100 = $('#btn_monkey100'); // possédant moins de 100 positions possibles (10x10 = 100 + bonbons et joueurs)
+    btn_monkey100.hide();
+  }
   // horizontal
   for(var x = 0; x < zone.length; x++) {
     //vertical
