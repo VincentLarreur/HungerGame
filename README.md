@@ -5,9 +5,17 @@ Un jeu HungerGame implémenté en fonction de l'énoncé du projet SR, ESIR 2020
 Mis en place en utilisant nodejs pour la partie serveur et socket.io pour la communication client/serveur.
 Déployé sur internet en utilisant une machine virtuelle Ubuntu de l'istic.
 
-Lien GitLab : https://gitlab.istic.univ-rennes1.fr/17002220/hungergames
+## Rapport 
 
-Lien du jeu : http://148.60.11.162:8000/ 
+Voir la version [démo](http://148.60.11.162:8000/) de Hunger Game !
+
+## Rapport 
+
+Voir le [rapport](https://docs.google.com/document/d/1ZdQjy_KrKsZRNxp86dYisYeUfszlGgCPhhkym1GT03s/edit?usp=sharing) concernant ce projet et son développement.
+
+## Work Flow Général
+
+![alt text](./FlowHungerGame.jpg)
 
 ## Auteurs
 
