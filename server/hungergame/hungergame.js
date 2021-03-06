@@ -9,7 +9,7 @@ class HungerGame {
     constructor(taille_zone, nb_bonbons) {
         // Vérification des arguments
         this.tailleZone = (taille_zone<10 || taille_zone > 50) ? 10 : taille_zone;
-        this.nb_bonbons = (nb_bonbons<5 || nb_bonbons > taille_zone) ? 10 : nb_bonbons;
+        this.nb_bonbons = (nb_bonbons<5 || nb_bonbons > taille_zone*taille_zone) ? 10 : nb_bonbons;
 
         // Initialisation de la partie
         this.joueurs = [];
