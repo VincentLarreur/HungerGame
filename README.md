@@ -5,9 +5,15 @@ Un jeu HungerGame implémenté en fonction de l'énoncé du projet SR, ESIR 2020
 Mis en place en utilisant nodejs pour la partie serveur et socket.io pour la communication client/serveur.
 Déployé sur internet en utilisant une machine virtuelle Ubuntu de l'istic.
 
-## Rapport 
+## Démo 
 
 Voir la version [démo](http://148.60.11.162:8000/) de Hunger Game !
+
+## Image Docker 
+
+L'image Docker est disponible [içi](https://hub.docker.com/repository/docker/vincentlarreur/hungergame/general).
+
+https://hub.docker.com/repository/docker/vincentlarreur/hungergame/general
 
 ## Rapport 
 
