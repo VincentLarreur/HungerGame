@@ -13,8 +13,6 @@ Voir la version [démo](http://148.60.11.162:8000/) de Hunger Game !
 
 L'image Docker est disponible [içi](https://hub.docker.com/repository/docker/vincentlarreur/hungergame/general).
 
-https://hub.docker.com/repository/docker/vincentlarreur/hungergame/general
-
 ## Rapport 
 
 Voir le [rapport](https://docs.google.com/document/d/1ZdQjy_KrKsZRNxp86dYisYeUfszlGgCPhhkym1GT03s/edit?usp=sharing) concernant ce projet et son développement.
