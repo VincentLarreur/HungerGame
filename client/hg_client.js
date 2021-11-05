@@ -17,7 +17,7 @@ function HGClient() {
   this.div_monkey      = $('#div_monkey');
   this.ul_gagnant      = $('#ul_gagnant');
 
-  // Variables 
+  // Variables
 
   this.couleurs = ['#c5a4e7', '#ce25be', '#4d164d', '#800080', '#4b0082', '#20208b', '#0000ff',
                   '#90c8ea', '#3486b8', '#359c9a', '#1d6d6c', '#8bb684', '#486540', '#0f5a0f',
@@ -53,7 +53,7 @@ function HGClient() {
 HGClient.prototype.initSocket = function() {
 
   // Variable pour la connexion
-  var server_uri = 'http://127.0.0.1:8000';
+  var server_uri = 'https://hunger--game.herokuapp.com/';
   var socket_io_path = '/socket.io';
   var socket = io(server_uri, { path: socket_io_path, reconnectionAttempts: 3 });
 
@@ -113,11 +113,11 @@ HGClient.prototype.initSocket = function() {
   // Reçois un gagnant
   socket.on('win', function(data) {
     // Genere le dom élément
-    var text = '<span style="color:' 
+    var text = '<span style="color:'
       + this.couleurJoueur(data[0])
-      + ';">' + data[1] 
-      + '</span> a gagné avec ' 
-      + data[2] 
+      + ';">' + data[1]
+      + '</span> a gagné avec '
+      + data[2]
       + ' points!';
     this.ul_gagnant.append('<li id="li_winner"class="list-group-item">' + text + '</li>');
 
@@ -215,8 +215,8 @@ HGClient.prototype.updateScorePanel = function(joueurs) {
     if(classement[i] !== null)
       text += '<span class="badge" style="background-color:'
         + this.couleurJoueur(classement[i].id)
-        + ';">'+ (i+1) +'</span> ' 
-        + classement[i].pseudo 
+        + ';">'+ (i+1) +'</span> '
+        + classement[i].pseudo
         + ' - '
         + classement[i].score
         + '<br>';
