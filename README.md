@@ -40,6 +40,10 @@ Exemple pour le déploiement sur vm de l'istic
 ```
 make start SERVER_URI_PARAM="http://148.60.11.162:8000/"
 ```
+Exemple pour le déploiement en local
+```
+make start SERVER_URI_PARAM="http://localhost:8080/"
+```
 Arrêt de l'application
 ```
 make stop
