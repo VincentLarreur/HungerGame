@@ -1,16 +1,22 @@
 {
-  "name": "hungergames",
-  "version": "0.0.1",
+  "name": "hungergame",
+  "version": "0.0.2",
   "description": "A multiplayer hunger game.",
-  "license": "UNLICENSED",
+  "keywords": [
+    "node",
+    "socket.io"
+  ],
   "dependencies": {
     "socket.io": "^2.3.0"
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.istic.univ-rennes1.fr:17002220/hungergames.git"
+    "url": "https://github.com/VincentLarreur/HungerGame"
   },
   "scripts": {
-    "start": "node ."
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }

@@ -1,0 +1,6 @@
+{
+    "name": "Hunger Game",
+    "description": "A multiplayer, snake-like game based on Socket.IO and Node.js.",
+    "repository": "https://github.com/VincentLarreur/HungerGame",
+    "keywords": ["node", "socket.io"]
+  }

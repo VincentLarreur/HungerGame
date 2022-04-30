@@ -1,7 +1,9 @@
-// Hunger Game socket API
-"use strict";
+'use strict';
 
-const HungerGame = require('../hungergame/hungergame.js');
+const HungerGame = require('./resources/hungergame/hungergame.js');
+
+// Get configuration
+var config = require('./resources/config/config.js');
 
 class SocketAPI {
 
@@ -12,9 +14,8 @@ class SocketAPI {
      * @param {Number} tailleZone - taille de la zone de jeu
      * @param {Number} nbBonbons - nombre de bonbons
      */
-    startService(port, nbRooms, tailleZone, nbBonbons) {
-        var HungerGame = require('../hungergame/hungergame.js');
-        var socket_io = require('socket.io')();
+    startService(port, nbRooms, tailleZone, nbBonbons, index) {
+        const socketIO = require('socket.io')();
 
         // Initialisation de chaque room
         this.rooms = [];
@@ -36,8 +37,9 @@ class SocketAPI {
         }
 
         // Initialisation socket.io
-        socket_io.on('connection', this._onConnection.bind(this));
-        socket_io.listen(port);
+        socketIO.on('connection', this._onConnection.bind(this));
+        socketIO.listen(port);
+        console.log('Listening on port ' + port);
     }
 
     /**
@@ -45,10 +47,12 @@ class SocketAPI {
      * @param {socket} socket - socket instance
      */
     _onConnection(socket) {
+        console.log('Client connected')
         socket.started = false;
 
         // Liste de toutes les rooms
-        socket.on('liste_room_client_server', function () {
+        socket.on('liste_room_server_client', function () {
+            console.log('list');
             var liste = [];
             for (var roomID in this.rooms) {
                 var sockets = this.rooms[roomID].sockets;
@@ -98,8 +102,8 @@ class SocketAPI {
             var roomID = socket.roomID;
             var room = this.rooms[roomID];
             if (typeof room === 'undefined') return;
-            
-            for(var i=0; i<data; i++) {
+
+            for (var i = 0; i < data; i++) {
                 room.hungergame.startMonkey();
             }
         }.bind(this));
@@ -121,6 +125,7 @@ class SocketAPI {
 
         // Déconnexion d'un joueur
         socket.on('disconnect', function () {
+            console.log('Client disconnected');
             this._removeSocket(socket);
 
             // Supprime le joueur si il est toujours vivant
@@ -162,11 +167,11 @@ class SocketAPI {
             room = hungergame.room;
             socket = room.sockets[joueurID];
             if (typeof socket !== 'undefined') {
-                if( event == 'joueur_mort' ) {
+                if (event == 'joueur_mort') {
                     // Notification au client de sa mort
                     socket.emit('mort');
                     socket.started = false;
-                } else if ( event == 'win' ) {
+                } else if (event == 'win') {
                     // Notification à tous les clients du gagnant
                     for (var k in room.sockets) {
                         var s = room.sockets[k];
@@ -178,4 +183,11 @@ class SocketAPI {
     }
 }
 
-module.exports = SocketAPI;
+var socket_api = new SocketAPI();
+
+socket_api.startService(
+    config.config.port,
+    config.config.nbRooms, 
+    config.config.taille,
+    config.config.nbBonbons,
+    config.config.index);

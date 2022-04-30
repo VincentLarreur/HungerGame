@@ -14,4 +14,6 @@ config.taille = [50, 25, 10];
 // nombre de bonbons 
 config.nbBonbons = [50, 25, 5];
 
+config.index = '/index.html'
+
 module.exports.config = config;
